@@ -6,10 +6,14 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin, Clock, Star, DollarSign, Users, Briefcase, Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import CreateJobModal from "@/components/modals/CreateJobModal";
+import ApplicantsModal from "@/components/modals/ApplicantsModal";
 
 const EstablishmentDashboard = () => {
   const [activeTab, setActiveTab] = useState("vagas");
   const [isCreateJobModalOpen, setIsCreateJobModalOpen] = useState(false);
+  const [isApplicantsModalOpen, setIsApplicantsModalOpen] = useState(false);
+  const [selectedJobTitle, setSelectedJobTitle] = useState("");
+  const [selectedApplicants, setSelectedApplicants] = useState<any[]>([]);
   const { toast } = useToast();
 
   const [stats, setStats] = useState({
@@ -45,20 +49,32 @@ const EstablishmentDashboard = () => {
   const [applications, setApplications] = useState([
     {
       id: 1,
+      jobId: 1,
+      name: "João Silva",
       freelancerName: "João Silva",
       jobTitle: "Garçom para Evento Corporativo",
       rating: 4.8,
       experience: "3 anos",
-      status: "pending"
+      avatar:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+      location: "São Paulo, SP",
+      appliedDate: "05/01/2024",
+      status: "pending",
     },
     {
       id: 2,
+      jobId: 1,
+      name: "Maria Santos",
       freelancerName: "Maria Santos",
       jobTitle: "Garçom para Evento Corporativo",
       rating: 4.9,
       experience: "5 anos",
-      status: "pending"
-    }
+      avatar:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+      location: "São Paulo, SP",
+      appliedDate: "06/01/2024",
+      status: "pending",
+    },
   ]);
 
   const handleCreateJob = (jobData: any) => {
@@ -67,20 +83,42 @@ const EstablishmentDashboard = () => {
   };
 
   const handleViewApplications = (jobId: number) => {
-    toast({
-      title: "Ver candidaturas",
-      description: "Funcionalidade em desenvolvimento",
-    });
+    const job = myJobs.find((j) => j.id === jobId);
+    setSelectedJobTitle(job ? job.title : "");
+    setSelectedApplicants(applications.filter((app) => app.jobId === jobId));
+    setIsApplicantsModalOpen(true);
   };
 
   const handleApproveApplication = (appId: number) => {
-    setApplications(prev => 
-      prev.map(app => 
+    setApplications((prev) =>
+      prev.map((app) =>
+        app.id === appId ? { ...app, status: "approved" } : app
+      )
+    );
+    setSelectedApplicants((prev) =>
+      prev.map((app) =>
         app.id === appId ? { ...app, status: "approved" } : app
       )
     );
     toast({
       title: "Candidatura aprovada!",
+      description: "O freelancer foi notificado.",
+    });
+  };
+
+  const handleRejectApplication = (appId: number) => {
+    setApplications((prev) =>
+      prev.map((app) =>
+        app.id === appId ? { ...app, status: "rejected" } : app
+      )
+    );
+    setSelectedApplicants((prev) =>
+      prev.map((app) =>
+        app.id === appId ? { ...app, status: "rejected" } : app
+      )
+    );
+    toast({
+      title: "Candidatura rejeitada",
       description: "O freelancer foi notificado.",
     });
   };
@@ -314,6 +352,16 @@ const EstablishmentDashboard = () => {
         isOpen={isCreateJobModalOpen}
         onClose={() => setIsCreateJobModalOpen(false)}
         onSubmit={handleCreateJob}
+      />
+
+      {/* Applicants Modal */}
+      <ApplicantsModal
+        isOpen={isApplicantsModalOpen}
+        onClose={() => setIsApplicantsModalOpen(false)}
+        jobTitle={selectedJobTitle}
+        applicants={selectedApplicants}
+        onApprove={handleApproveApplication}
+        onReject={handleRejectApplication}
       />
     </div>
   );
