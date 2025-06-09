@@ -72,3 +72,19 @@ To connect a domain, navigate to Project > Settings > Domains and click Connect 
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
 # garcommatch
+
+## Supabase Configuration
+
+To enable authentication with Supabase, create a `.env` file in the project root with the following variables:
+
+```
+VITE_SUPABASE_URL=https://cfdoxhlhsedbohangdsr.supabase.co
+VITE_SUPABASE_ANON_KEY=<your anon key>
+```
+
+Install dependencies (including `@supabase/supabase-js`) and run the development server:
+
+```
+npm install
+npm run dev
+```

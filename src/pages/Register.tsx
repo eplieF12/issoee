@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { UserPlus, ArrowLeft } from "lucide-react";
+import { supabase } from "@/lib/supabaseClient";
 
 const Register = () => {
   const [userType, setUserType] = useState<"freelancer" | "establishment">("freelancer");
@@ -32,7 +33,7 @@ const Register = () => {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (formData.password !== formData.confirmPassword) {
       toast({
         title: "Erro",
@@ -44,18 +45,34 @@ const Register = () => {
 
     setIsLoading(true);
 
-    // Simular registro
-    setTimeout(() => {
-      toast({
-        title: "Conta criada com sucesso!",
-        description: `Bem-vindo(a) à FreelanceConnect, ${formData.name}!`,
-      });
+    const { error } = await supabase.auth.signUp({
+      email: formData.email,
+      password: formData.password,
+      options: {
+        data: {
+          name: formData.name,
+          phone: formData.phone,
+          city: formData.city,
+          category: formData.category,
+          description: formData.description,
+          user_type: userType,
+        },
+      },
+    });
 
-      // Redirecionar para login após cadastro
-      navigate("/login");
-      
+    if (error) {
+      toast({ title: "Erro", description: error.message, variant: "destructive" });
       setIsLoading(false);
-    }, 1000);
+      return;
+    }
+
+    toast({
+      title: "Conta criada com sucesso!",
+      description: `Bem-vindo(a) à FreelanceConnect, ${formData.name}!`,
+    });
+
+    navigate("/login");
+    setIsLoading(false);
   };
 
   const categories = [

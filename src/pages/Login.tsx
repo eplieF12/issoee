@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { LogIn, ArrowLeft } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/lib/supabaseClient";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -23,32 +24,38 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simular login
-    setTimeout(() => {
-      // Criar objeto usuário simulado
-      const userData = {
-        id: 1,
-        name: "Usuário Teste",
-        type: userType,
-        email: email
-      };
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-      login(userData);
-
-      toast({
-        title: "Login realizado com sucesso!",
-        description: `Bem-vindo(a) de volta, ${userData.name}!`,
-      });
-
-      // Redirecionar baseado no tipo de usuário
-      if (userType === "freelancer") {
-        navigate("/freelancer-dashboard");
-      } else {
-        navigate("/establishment-dashboard");
-      }
-      
+    if (error) {
+      toast({ title: "Erro", description: error.message, variant: "destructive" });
       setIsLoading(false);
-    }, 1000);
+      return;
+    }
+
+    const userData = {
+      id: data.user?.id || 0,
+      name: (data.user?.user_metadata as any)?.name || "",
+      type: userType,
+      email: data.user?.email || email,
+    };
+
+    login(userData);
+
+    toast({
+      title: "Login realizado com sucesso!",
+      description: `Bem-vindo(a) de volta, ${userData.name}!`,
+    });
+
+    if (userType === "freelancer") {
+      navigate("/freelancer-dashboard");
+    } else {
+      navigate("/establishment-dashboard");
+    }
+
+    setIsLoading(false);
   };
 
   return (
