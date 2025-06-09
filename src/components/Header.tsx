@@ -71,9 +71,9 @@ const Header = () => {
                 src="/logo.png"
                 srcSet="/logo.svg 2x"
                 alt="Logo"
-                className="h-26 w-24 mr-4"
+                className="h-16 w-16 mr-4 object-contain"
               />
-              {user && <span className="text-white font-semibold">{user.name}</span>}
+              {user && <span className="text-black font-semibold">{user.name}</span>}
             </button>
           </div>
 
@@ -83,7 +83,7 @@ const Header = () => {
               <button
                 key={item.name}
                 onClick={() => navigate(item.href)}
-                className={`relative text-gray-700 hover:text-blue-600 transition-colors font-medium ${
+                className={`relative text-black hover:text-blue-600 transition-colors font-medium ${
                   location.pathname === item.href ? "text-blue-600 font-semibold" : ""
                 }`}
               >
@@ -169,7 +169,7 @@ const Header = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-700 hover:text-blue-600 transition-colors"
+              className="text-black hover:text-blue-600 transition-colors"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -190,7 +190,7 @@ const Header = () => {
                   className={`relative block px-3 py-2 text-base font-medium transition-colors w-full text-left ${
                     location.pathname === item.href
                       ? "text-blue-600 font-semibold bg-blue-50"
-                      : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+                      : "text-black hover:text-blue-600 hover:bg-gray-50"
                   }`}
                 >
                   {item.name}
