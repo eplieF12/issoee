@@ -24,13 +24,12 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-32">
         <div className="text-center max-w-4xl mx-auto">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 animate-fade-in">
-            Conecte-se com os melhores
-            <span className="block text-gradient">freelancers do setor</span>
+            Conecte-se aos melhores
+            <span className="block text-gradient">profissionais do setor</span>
           </h1>
           
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto animate-fade-in" style={{animationDelay: '0.2s'}}>
-            A plataforma que conecta estabelecimentos a garçons, promoters e profissionais de eventos qualificados. 
-            Contrate com agilidade e confiança.
+            Plataforma confiável para contratar garçons, promoters e especialistas em eventos de forma ágil e segura.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-in" style={{animationDelay: '0.4s'}}>
