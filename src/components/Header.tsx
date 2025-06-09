@@ -58,7 +58,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed w-full top-0 z-50 bg-purple-700 shadow-sm border-b">
+    <header className="fixed w-full top-0 z-50 bg-white/80 backdrop-blur shadow-md border-b">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -79,7 +79,7 @@ const Header = () => {
                 key={item.name}
                 onClick={() => navigate(item.href)}
                 className={`relative text-gray-700 hover:text-blue-600 transition-colors font-medium ${
-                  location.pathname === item.href ? "text-blue-600" : ""
+                  location.pathname === item.href ? "text-blue-600 font-semibold" : ""
                 }`}
               >
                 {item.name}
@@ -184,7 +184,7 @@ const Header = () => {
                   }}
                   className={`relative block px-3 py-2 text-base font-medium transition-colors w-full text-left ${
                     location.pathname === item.href
-                      ? "text-blue-600 bg-blue-50"
+                      ? "text-blue-600 font-semibold bg-blue-50"
                       : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
                   }`}
                 >
