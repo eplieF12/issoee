@@ -45,7 +45,7 @@ const Register = () => {
 
     setIsLoading(true);
 
-    const { error } = await supabase.auth.signUp({
+    const { data: signUpData, error } = await supabase.auth.signUp({
       email: formData.email,
       password: formData.password,
       options: {
@@ -64,6 +64,29 @@ const Register = () => {
       toast({ title: "Erro", description: error.message, variant: "destructive" });
       setIsLoading(false);
       return;
+    }
+
+    if (signUpData.user) {
+      const { error: insertError } = await supabase.from("profiles").insert({
+        id: signUpData.user.id,
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        city: formData.city,
+        category: formData.category,
+        description: formData.description,
+        user_type: userType,
+      });
+
+      if (insertError) {
+        toast({
+          title: "Erro ao salvar perfil",
+          description: insertError.message,
+          variant: "destructive",
+        });
+        setIsLoading(false);
+        return;
+      }
     }
 
     toast({
