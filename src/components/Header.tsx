@@ -67,7 +67,12 @@ const Header = () => {
               onClick={() => navigate("/")}
               className="flex items-center text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors"
             >
-              <img src="/logo.svg" alt="Logo" className="h-26 w-24 mr-4" />
+              <img
+                src="/logo.png"
+                srcSet="/logo.svg 2x"
+                alt="Logo"
+                className="h-26 w-24 mr-4"
+              />
               {user && <span className="text-white font-semibold">{user.name}</span>}
             </button>
           </div>
