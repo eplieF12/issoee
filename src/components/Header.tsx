@@ -68,10 +68,10 @@ const Header = () => {
               className="flex items-center text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors"
             >
               <img
-                src="/logo.png"
+                src="/logo.svg"
                 srcSet="/logo.svg 2x"
                 alt="Logo"
-                className="h-12 w-auto mr-4 object-contain"
+                className="h-16 w-auto mr-4 object-contain"
               />
               {user && <span className="text-black font-semibold">{user.name}</span>}
             </button>
