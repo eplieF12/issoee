@@ -89,5 +89,7 @@ npm install
 npm run dev
 ```
 
-During registration, new accounts are inserted into the `users` table so make
-sure this table exists in your Supabase project with Row Level Security enabled.
+During registration, new accounts are inserted into the `users` table once the
+session is available. If your project requires e‑mail confirmation, the row will
+be created after the user verifies and signs in. Make sure this table exists in
+your Supabase project with Row Level Security enabled for authenticated users.
