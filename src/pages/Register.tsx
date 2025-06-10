@@ -60,7 +60,7 @@ const Register = () => {
       },
     });
 
-    if (data.user) {
+    if (data.session) {
       const { error: insertError } = await supabase.from("users").insert({
         id: data.user.id,
         name: formData.name,
@@ -85,10 +85,17 @@ const Register = () => {
       return;
     }
 
-    toast({
-      title: "Conta criada com sucesso!",
-      description: `Bem-vindo(a) à FreelanceConnect, ${formData.name}!`,
-    });
+    if (data.session) {
+      toast({
+        title: "Conta criada com sucesso!",
+        description: `Bem-vindo(a) à FreelanceConnect, ${formData.name}!`,
+      });
+    } else {
+      toast({
+        title: "Verifique seu e-mail",
+        description: "Clique no link que enviamos para ativar sua conta.",
+      });
+    }
 
     navigate("/login");
     setIsLoading(false);
