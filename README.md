@@ -94,3 +94,5 @@ a session is available. If your project requires e‑mail confirmation, this row
 is created the first time the user signs in. The login page checks for the
 record and inserts it when missing. Ensure the `users` table exists in your
 Supabase project with Row Level Security enabled for authenticated users.
+If a profile already exists, the login page uses the stored `user_type` to route
+the user to the correct dashboard, ignoring the selected option on the form.

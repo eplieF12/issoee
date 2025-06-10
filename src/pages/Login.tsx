@@ -35,48 +35,47 @@ const Login = () => {
       return;
     }
 
-    const userData = {
-      id: data.user?.id || 0,
-      name: (data.user?.user_metadata as any)?.name || "",
-      type: userType,
-      email: data.user?.email || email,
-    };
+    let currentType: "freelancer" | "establishment" = userType;
+    let name = (data.user?.user_metadata as any)?.name || "";
 
-    // Ensure a profile row exists for this user
     if (data.user) {
-      const profileData = {
-        id: data.user.id,
-        name: (data.user.user_metadata as any)?.name ?? "",
-        email: data.user.email ?? email,
-        phone: (data.user.user_metadata as any)?.phone ?? "",
-        city: (data.user.user_metadata as any)?.city ?? "",
-        category: (data.user.user_metadata as any)?.category ?? "",
-        description: (data.user.user_metadata as any)?.description ?? "",
-        user_type: (data.user.user_metadata as any)?.user_type ?? userType,
-      };
-
-      const { data: existing } = await supabase
+      const { data: profile } = await supabase
         .from("users")
-        .select("id")
+        .select("id, user_type, name")
         .eq("id", data.user.id)
         .single();
 
-      if (!existing) {
-        const { error: insertError } = await supabase
-          .from("users")
-          .insert(profileData);
+      if (profile) {
+        currentType = profile.user_type as "freelancer" | "establishment";
+        name = profile.name;
+      } else {
+        const profileData = {
+          id: data.user.id,
+          name,
+          email: data.user.email ?? email,
+          phone: (data.user.user_metadata as any)?.phone ?? "",
+          city: (data.user.user_metadata as any)?.city ?? "",
+          category: (data.user.user_metadata as any)?.category ?? "",
+          description: (data.user.user_metadata as any)?.description ?? "",
+          user_type: currentType,
+        };
+
+        const { error: insertError } = await supabase.from("users").insert(profileData);
 
         if (insertError) {
-          toast({
-            title: "Erro",
-            description: insertError.message,
-            variant: "destructive",
-          });
+          toast({ title: "Erro", description: insertError.message, variant: "destructive" });
           setIsLoading(false);
           return;
         }
       }
     }
+
+    const userData = {
+      id: data.user?.id || 0,
+      name,
+      type: currentType,
+      email: data.user?.email || email,
+    };
 
     login(userData);
 
@@ -85,7 +84,7 @@ const Login = () => {
       description: `Bem-vindo(a) de volta, ${userData.name}!`,
     });
 
-    if (userType === "freelancer") {
+    if (currentType === "freelancer") {
       navigate("/freelancer-dashboard");
     } else {
       navigate("/establishment-dashboard");
