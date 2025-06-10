@@ -35,6 +35,16 @@ const Login = () => {
       return;
     }
 
+    if (!data.session) {
+      toast({
+        title: "Verifique seu e-mail",
+        description: "Confirme seu cadastro antes de fazer login.",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return;
+    }
+
     let currentType: "freelancer" | "establishment" = userType;
     let name = (data.user?.user_metadata as any)?.name || "";
 
@@ -43,7 +53,7 @@ const Login = () => {
         .from("users")
         .select("id, user_type, name")
         .eq("id", data.user.id)
-        .single();
+        .maybeSingle();
 
       if (profile) {
         currentType = profile.user_type as "freelancer" | "establishment";
@@ -71,7 +81,7 @@ const Login = () => {
     }
 
     const userData = {
-      id: data.user?.id || 0,
+      id: data.user?.id || "",
       name,
       type: currentType,
       email: data.user?.email || email,

@@ -93,6 +93,13 @@ During registration, a profile row is inserted into the `users` table only once
 a session is available. If your project requires e‑mail confirmation, this row
 is created the first time the user signs in. The login page checks for the
 record and inserts it when missing. Ensure the `users` table exists in your
-Supabase project with Row Level Security enabled for authenticated users.
+Supabase project with Row Level Security enabled for authenticated users. A
+simple policy allowing authenticated inserts and selects is:
+
+```
+CREATE POLICY "Users are owners" ON users
+  FOR ALL USING ( auth.uid() = id ) WITH CHECK ( auth.uid() = id );
+```
+This grants the signed-in user permission to create and read their own row.
 If a profile already exists, the login page uses the stored `user_type` to route
 the user to the correct dashboard, ignoring the selected option on the form.
