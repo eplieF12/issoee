@@ -45,7 +45,7 @@ const Register = () => {
 
     setIsLoading(true);
 
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email: formData.email,
       password: formData.password,
       options: {
@@ -60,16 +60,42 @@ const Register = () => {
       },
     });
 
+    if (data.session) {
+      const { error: insertError } = await supabase.from("users").insert({
+        id: data.user.id,
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        city: formData.city,
+        category: formData.category,
+        description: formData.description,
+        user_type: userType,
+      });
+
+      if (insertError) {
+        toast({ title: "Erro", description: insertError.message, variant: "destructive" });
+        setIsLoading(false);
+        return;
+      }
+    }
+
     if (error) {
       toast({ title: "Erro", description: error.message, variant: "destructive" });
       setIsLoading(false);
       return;
     }
 
-    toast({
-      title: "Conta criada com sucesso!",
-      description: `Bem-vindo(a) à FreelanceConnect, ${formData.name}!`,
-    });
+    if (data.session) {
+      toast({
+        title: "Conta criada com sucesso!",
+        description: `Bem-vindo(a) à FreelanceConnect, ${formData.name}!`,
+      });
+    } else {
+      toast({
+        title: "Verifique seu e-mail",
+        description: "Clique no link que enviamos para ativar sua conta.",
+      });
+    }
 
     navigate("/login");
     setIsLoading(false);

@@ -42,6 +42,42 @@ const Login = () => {
       email: data.user?.email || email,
     };
 
+    // Ensure a profile row exists for this user
+    if (data.user) {
+      const profileData = {
+        id: data.user.id,
+        name: (data.user.user_metadata as any)?.name ?? "",
+        email: data.user.email ?? email,
+        phone: (data.user.user_metadata as any)?.phone ?? "",
+        city: (data.user.user_metadata as any)?.city ?? "",
+        category: (data.user.user_metadata as any)?.category ?? "",
+        description: (data.user.user_metadata as any)?.description ?? "",
+        user_type: (data.user.user_metadata as any)?.user_type ?? userType,
+      };
+
+      const { data: existing } = await supabase
+        .from("users")
+        .select("id")
+        .eq("id", data.user.id)
+        .single();
+
+      if (!existing) {
+        const { error: insertError } = await supabase
+          .from("users")
+          .insert(profileData);
+
+        if (insertError) {
+          toast({
+            title: "Erro",
+            description: insertError.message,
+            variant: "destructive",
+          });
+          setIsLoading(false);
+          return;
+        }
+      }
+    }
+
     login(userData);
 
     toast({

@@ -88,3 +88,9 @@ Install dependencies (including `@supabase/supabase-js`) and run the development
 npm install
 npm run dev
 ```
+
+During registration, a profile row is inserted into the `users` table only once
+a session is available. If your project requires e‑mail confirmation, this row
+is created the first time the user signs in. The login page checks for the
+record and inserts it when missing. Ensure the `users` table exists in your
+Supabase project with Row Level Security enabled for authenticated users.
