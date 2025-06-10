@@ -88,3 +88,6 @@ Install dependencies (including `@supabase/supabase-js`) and run the development
 npm install
 npm run dev
 ```
+
+During registration, new accounts are inserted into the `users` table so make
+sure this table exists in your Supabase project with Row Level Security enabled.
