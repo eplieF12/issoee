@@ -113,3 +113,15 @@ During registration, new accounts are inserted into the `users` table once the
 session is available. If your project requires e‑mail confirmation, the row will
 be created after the user verifies and signs in. Make sure this table exists in
 your Supabase project with Row Level Security enabled for authenticated users.
+
+### Disable e‑mail confirmation
+
+If you prefer to allow sign ups without requiring users to confirm their e‑mail
+address, open your Supabase project and navigate to **Auth → Settings → Email**.
+Disable the **Confirm email** option and save the changes. New registrations
+will then return a session immediately, skipping the "Verifique seu e‑mail"
+message displayed in the app.
+
+If you encounter the message “for security purposes, you can only request this
+after …”, remove any unverified user from the **Authentication** panel or wait a
+few minutes before trying again.
