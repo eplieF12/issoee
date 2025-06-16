@@ -7,7 +7,16 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { Star, MapPin, Calendar, Edit, Camera, Award } from "lucide-react";
+import {
+  Star,
+  MapPin,
+  Calendar,
+  Edit,
+  Briefcase,
+  DollarSign,
+  CheckCircle
+} from "lucide-react";
+import ProfileImageUpload from "@/components/ProfileImageUpload";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "@/contexts/AuthContext";
@@ -88,76 +97,84 @@ const Profile = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Profile Card */}
-          <div className="lg:col-span-1">
-            <Card>
-              <CardContent className="p-6 text-center">
-                <div className="relative mb-4">
-                  <img 
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
-                    alt="Profile"
-                    className="w-24 h-24 rounded-full object-cover mx-auto border-4 border-white shadow-md"
-                  />
-                  <button className="absolute bottom-0 right-1/2 transform translate-x-6 translate-y-2 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors">
-                    <Camera className="w-4 h-4" />
-                  </button>
-                </div>
-                
-                <h2 className="text-xl font-bold text-gray-900 mb-1">Novo Usuário</h2>
-                <p className="text-gray-600 mb-2">Profissão</p>
-                <div className="flex items-center justify-center mb-4">
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8">
+        {/* Profile Header */}
+        <Card className="overflow-hidden mb-8">
+          <div className="h-24 bg-gradient-to-r from-blue-600 to-purple-600" />
+          <CardContent className="-mt-12 flex flex-col md:flex-row items-center justify-between">
+            <div className="flex items-center space-x-6">
+              <ProfileImageUpload
+                currentImage="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
+                userName={profile.name || "Usuário"}
+                onImageChange={() => {}}
+              />
+              <div className="text-center md:text-left">
+                <h2 className="text-2xl font-bold text-gray-900">{profile.name || "Novo Usuário"}</h2>
+                <p className="text-gray-600 flex items-center justify-center md:justify-start">
+                  <MapPin className="w-4 h-4 mr-1" />
+                  {profile.city || "Localização"}
+                </p>
+                <div className="flex items-center justify-center md:justify-start mt-2">
                   <Star className="w-4 h-4 text-yellow-400 fill-current mr-1" />
                   <span className="font-medium">{userStats.rating}</span>
                   <span className="text-gray-500 text-sm ml-1">({userStats.totalJobs} avaliações)</span>
                 </div>
-                
-                <div className="flex items-center justify-center space-x-2 mb-4">
-                  <span className="text-sm text-gray-600">Disponível para trabalhar</span>
-                  <Switch checked={isAvailable} onCheckedChange={setIsAvailable} />
-                </div>
+              </div>
+            </div>
 
-                <Badge variant="secondary" className="bg-green-100 text-green-800 mb-4">
-                  ✓ Perfil Verificado
-                </Badge>
+            <div className="mt-4 md:mt-0 flex items-center space-x-4">
+              <span className="text-sm text-gray-600">Disponível para trabalhar</span>
+              <Switch checked={isAvailable} onCheckedChange={setIsAvailable} />
+              <Badge variant="secondary" className="bg-green-100 text-green-800">
+                <CheckCircle className="w-4 h-4 mr-1" /> Perfil Verificado
+              </Badge>
+              <Button variant="outline" onClick={() => setIsEditing(!isEditing)}>
+                <Edit className="w-4 h-4 mr-2" />
+                {isEditing ? "Cancelar" : "Editar"}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
 
-                <Button 
-                  variant="outline" 
-                  className="w-full"
-                  onClick={() => setIsEditing(!isEditing)}
-                >
-                  <Edit className="w-4 h-4 mr-2" />
-                  {isEditing ? "Cancelar" : "Editar Perfil"}
-                </Button>
-              </CardContent>
-            </Card>
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <Card>
+            <CardContent className="p-6 flex items-center">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                <Briefcase className="w-6 h-6 text-blue-600" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600">Trabalhos realizados</p>
+                <p className="text-2xl font-bold text-gray-900">{userStats.totalJobs}</p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-6 flex items-center">
+              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                <Star className="w-6 h-6 text-green-600" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600">Taxa de conclusão</p>
+                <p className="text-2xl font-bold text-gray-900">{userStats.completionRate}%</p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-6 flex items-center">
+              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                <DollarSign className="w-6 h-6 text-purple-600" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600">Ganhos totais</p>
+                <p className="text-2xl font-bold text-gray-900">R$ {userStats.earnings}</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
-            {/* Stats Card */}
-            <Card className="mt-6">
-              <CardHeader>
-                <CardTitle className="text-lg">Estatísticas</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Trabalhos realizados</span>
-                    <span className="font-semibold">{userStats.totalJobs}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Taxa de conclusão</span>
-                    <span className="font-semibold text-green-600">{userStats.completionRate}%</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Ganhos totais</span>
-                    <span className="font-semibold text-blue-600">R$ {userStats.earnings}</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             {/* Personal Information */}
