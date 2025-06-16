@@ -13,46 +13,22 @@ const FreelancerProfile = () => {
   const navigate = useNavigate();
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
-  // Mock data - em uma aplicação real, isso viria do backend
+  // Dados do freelancer carregados do backend em breve
   const freelancer = {
     id: parseInt(id || "1"),
-    name: "João Silva",
-    category: "Garçom",
-    city: "São Paulo, SP",
-    rating: 4.8,
-    completedJobs: 45,
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-    description: "Garçom experiente com 3 anos de atuação em eventos corporativos e restaurantes. Especializado em atendimento de alta qualidade e eventos premium.",
-    availability: "Disponível",
-    hourlyRate: "R$ 25/hora",
-    experience: "3 anos",
-    skills: ["Atendimento ao Cliente", "Eventos Corporativos", "Coquetelaria Básica", "Organização"],
-    portfolio: [
-      {
-        title: "Evento Corporativo - Empresa XYZ",
-        date: "Dezembro 2023",
-        description: "Atendimento em evento de fim de ano com 200 pessoas"
-      },
-      {
-        title: "Casamento - Família Silva",
-        date: "Novembro 2023", 
-        description: "Serviço de garçom em cerimônia de casamento"
-      }
-    ],
-    reviews: [
-      {
-        client: "Maria Santos",
-        rating: 5,
-        comment: "Excelente profissional, muito atencioso e pontual.",
-        date: "15/12/2023"
-      },
-      {
-        client: "Carlos Oliveira", 
-        rating: 4,
-        comment: "Bom trabalho, recomendo!",
-        date: "10/11/2023"
-      }
-    ]
+    name: "",
+    category: "",
+    city: "",
+    rating: 0,
+    completedJobs: 0,
+    avatar: "",
+    description: "",
+    availability: "",
+    hourlyRate: "",
+    experience: "",
+    skills: [] as string[],
+    portfolio: [] as { title: string; date: string; description: string }[],
+    reviews: [] as { client: string; rating: number; comment: string; date: string }[]
   };
 
   return (

@@ -19,22 +19,15 @@ const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
 
   const stats = {
-    totalUsers: 1247,
-    activeJobs: 89,
-    totalRevenue: 45600,
-    reportedIssues: 12
+    totalUsers: 0,
+    activeJobs: 0,
+    totalRevenue: 0,
+    reportedIssues: 0
   };
 
-  const recentUsers = [
-    { id: 1, name: "João Silva", type: "freelancer", status: "active", joinDate: "10/01/2024" },
-    { id: 2, name: "Hotel Marriott", type: "establishment", status: "active", joinDate: "09/01/2024" },
-    { id: 3, name: "Maria Santos", type: "freelancer", status: "pending", joinDate: "08/01/2024" }
-  ];
+  const recentUsers: any[] = [];
 
-  const reportedContent = [
-    { id: 1, type: "job", title: "Vaga suspeita de fraude", reporter: "João Silva", status: "pending" },
-    { id: 2, type: "user", title: "Comportamento inadequado", reporter: "Maria Santos", status: "reviewing" }
-  ];
+  const reportedContent: any[] = [];
 
   return (
     <div className="min-h-screen bg-gray-50">

@@ -17,78 +17,21 @@ const FreelancerDashboard = () => {
   const { toast } = useToast();
   const { sendMessage } = useMessages();
 
-  // Simulando freelancer logado
-  const currentFreelancer = { id: 1, name: "João Silva" };
+  // Informações do freelancer serão carregadas do backend futuramente
+  const currentFreelancer = { id: 1, name: "" };
 
-  const [freelancerPixKey, setFreelancerPixKey] = useState("123.456.789-00");
-  const [earnings, setEarnings] = useState([
-    {
-      id: 1,
-      jobTitle: "Garçom - Evento Corporativo",
-      establishment: "Hotel Marriott",
-      amount: "R$ 108,00",
-      platformFee: "R$ 12,00",
-      date: "10/01/2024",
-      status: "received"
-    },
-    {
-      id: 2,
-      jobTitle: "Promoter - Shopping",
-      establishment: "Shopping Center",
-      amount: "R$ 180,00",
-      platformFee: "R$ 20,00",
-      date: "08/01/2024",
-      status: "received"
-    }
-  ]);
+  const [freelancerPixKey, setFreelancerPixKey] = useState("");
+  const [earnings, setEarnings] = useState<any[]>([]);
 
-  const [availableJobs, setAvailableJobs] = useState([
-    {
-      id: 1,
-      title: "Garçom para Evento Corporativo",
-      establishment: "Hotel Marriott",
-      location: "São Paulo, SP",
-      date: "15 de Janeiro",
-      time: "18:00 - 23:00",
-      payment: "R$ 120",
-      type: "Garçom",
-      urgent: true,
-      description: "Procuramos garçom experiente para evento corporativo em hotel de luxo. Será responsável pelo atendimento de 150 convidados durante jantar executivo.",
-      requirements: "Experiência mínima de 1 ano em eventos corporativos, boa apresentação pessoal, disponibilidade para trabalhar em fins de semana."
-    },
-    {
-      id: 2,
-      title: "Promoter para Lançamento de Produto",
-      establishment: "Shopping Iguatemi",
-      location: "São Paulo, SP", 
-      date: "18 de Janeiro",
-      time: "14:00 - 20:00",
-      payment: "R$ 200",
-      type: "Promoter",
-      urgent: false,
-      description: "Ativação de marca para lançamento de novo produto tecnológico. Interação com público, demonstração do produto e distribuição de brindes.",
-      requirements: "Carisma, facilidade de comunicação, experiência em ativações de marca."
-    }
-  ]);
+  const [availableJobs, setAvailableJobs] = useState<any[]>([]);
 
-  const [myJobs, setMyJobs] = useState([
-    {
-      id: 1,
-      title: "Atendente para Feira Gastronômica",
-      establishment: "Espaço Gourmet",
-      status: "confirmed",
-      date: "20 de Janeiro",
-      payment: "R$ 150",
-      description: "Atendimento durante feira gastronômica no centro de eventos. Responsável por orientar visitantes e auxiliar expositores.",
-      requirements: "Boa comunicação, disponibilidade para trabalhar em pé por longos períodos."
-    }
-  ]);
+  const [myJobs, setMyJobs] = useState<any[]>([]);
 
   const [stats, setStats] = useState({
-    monthlyJobs: 12,
-    monthlyEarnings: 1840,
-    averageRating: 4.8,
-    nextJob: "Amanhã"
+    monthlyJobs: 0,
+    monthlyEarnings: 0,
+    averageRating: 0,
+    nextJob: ""
   });
 
   const handleViewJobDetails = (job: any) => {
@@ -141,7 +84,7 @@ const FreelancerDashboard = () => {
         {/* Header Dashboard */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Olá, João! 👋
+            Olá! 👋
           </h1>
           <p className="text-gray-600">Gerencie suas oportunidades e acompanhe seu progresso</p>
         </div>

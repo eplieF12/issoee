@@ -40,36 +40,11 @@ interface MessagesContextType {
 const MessagesContext = createContext<MessagesContextType | undefined>(undefined);
 
 export const MessagesProvider = ({ children }: { children: ReactNode }) => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 1,
-      fromId: 1,
-      fromName: "Hotel Marriott",
-      fromType: "establishment",
-      toId: 1,
-      toName: "João Silva",
-      toType: "freelancer",
-      subject: "Vaga de Garçom",
-      message: "Olá João! Vimos seu perfil e gostaríamos de conversar sobre a vaga de garçom para nosso evento corporativo.",
-      timestamp: new Date().toISOString(),
-      read: false,
-      conversationId: "conv_1_1"
-    }
-  ]);
+  // Inicia sem mensagens salvas
+  const [messages, setMessages] = useState<Message[]>([]);
 
-  const [conversations, setConversations] = useState<Conversation[]>([
-    {
-      id: "conv_1_1",
-      participants: {
-        freelancer: { id: 1, name: "João Silva" },
-        establishment: { id: 1, name: "Hotel Marriott" }
-      },
-      lastMessage: "Olá João! Vimos seu perfil e gostaríamos de conversar sobre a vaga de garçom para nosso evento corporativo.",
-      lastMessageTime: new Date().toISOString(),
-      unreadCount: 1,
-      messages: []
-    }
-  ]);
+  // Inicia sem conversas salvas
+  const [conversations, setConversations] = useState<Conversation[]>([]);
 
   const sendMessage = (newMessage: Omit<Message, 'id' | 'timestamp'>) => {
     const message: Message = {

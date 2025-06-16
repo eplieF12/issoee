@@ -16,30 +16,13 @@ const Profile = () => {
   const { toast } = useToast();
 
   const userStats = {
-    totalJobs: 45,
-    rating: 4.8,
-    completionRate: 98,
-    earnings: 8450
+    totalJobs: 0,
+    rating: 0,
+    completionRate: 0,
+    earnings: 0
   };
 
-  const recentJobs = [
-    {
-      id: 1,
-      title: "Garçom - Evento Corporativo",
-      establishment: "Hotel Marriott",
-      date: "10 de Janeiro",
-      rating: 5,
-      earnings: "R$ 120"
-    },
-    {
-      id: 2,
-      title: "Promoter - Lançamento de Produto",
-      establishment: "Shopping Center",
-      date: "8 de Janeiro",
-      rating: 5,
-      earnings: "R$ 200"
-    }
-  ];
+  const recentJobs: any[] = [];
 
   const handleSaveProfile = () => {
     toast({
@@ -70,8 +53,8 @@ const Profile = () => {
                   </button>
                 </div>
                 
-                <h2 className="text-xl font-bold text-gray-900 mb-1">Carlos Silva</h2>
-                <p className="text-gray-600 mb-2">Garçom Profissional</p>
+                <h2 className="text-xl font-bold text-gray-900 mb-1">Novo Usuário</h2>
+                <p className="text-gray-600 mb-2">Profissão</p>
                 <div className="flex items-center justify-center mb-4">
                   <Star className="w-4 h-4 text-yellow-400 fill-current mr-1" />
                   <span className="font-medium">{userStats.rating}</span>
@@ -133,26 +116,26 @@ const Profile = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
-                    <Input defaultValue="Carlos Silva" disabled={!isEditing} />
+                    <Input defaultValue="" disabled={!isEditing} />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                    <Input defaultValue="carlos.silva@email.com" disabled={!isEditing} />
+                    <Input defaultValue="" disabled={!isEditing} />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
-                    <Input defaultValue="(11) 99999-9999" disabled={!isEditing} />
+                    <Input defaultValue="" disabled={!isEditing} />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Localização</label>
-                    <Input defaultValue="São Paulo, SP" disabled={!isEditing} />
+                    <Input defaultValue="" disabled={!isEditing} />
                   </div>
                 </div>
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Sobre mim</label>
-                  <Textarea 
-                    defaultValue="Garçom experiente com mais de 5 anos no setor de hospitalidade. Especializado em eventos corporativos e sociais. Pontual, comunicativo e sempre buscando excelência no atendimento."
+                  <Textarea
+                    defaultValue=""
                     disabled={!isEditing}
                     rows={3}
                   />
@@ -176,30 +159,17 @@ const Profile = () => {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Áreas de atuação</label>
-                    <div className="flex flex-wrap gap-2">
-                      <Badge>Garçom</Badge>
-                      <Badge>Bartender</Badge>
-                      <Badge>Atendimento ao Cliente</Badge>
-                      <Badge>Eventos Corporativos</Badge>
-                    </div>
+                    <div className="flex flex-wrap gap-2" />
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Experiência</label>
-                    <Input defaultValue="5 anos" disabled={!isEditing} />
+                    <Input defaultValue="" disabled={!isEditing} />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Certificações</label>
-                    <div className="space-y-2">
-                      <div className="flex items-center p-3 bg-gray-50 rounded-lg">
-                        <Award className="w-5 h-5 text-blue-600 mr-3" />
-                        <div>
-                          <p className="font-medium">Curso de Garçom Profissional</p>
-                          <p className="text-sm text-gray-600">SENAC - 2020</p>
-                        </div>
-                      </div>
-                    </div>
+                  <div className="space-y-2" />
                   </div>
                 </div>
               </CardContent>
