@@ -60,9 +60,10 @@ const Register = () => {
       },
     });
 
-    if (data.session) {
+    const userId = data.user?.id;
+    if (userId) {
       const { error: insertError } = await supabase.from("users").insert({
-        id: data.user.id,
+        id: userId,
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
