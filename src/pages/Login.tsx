@@ -50,7 +50,7 @@ const Login = () => {
     }
 
     const userData = {
-      id: data.user?.id || 0,
+      id: data.user?.id || "",
       name: profileName,
       type: userType,
       email: data.user?.email || email,

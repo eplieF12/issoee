@@ -61,7 +61,7 @@ const ProfileImageUpload = ({ currentImage, userName, onImageChange }: ProfileIm
     <div className="flex flex-col items-center space-y-4">
       <div className="relative">
         <Avatar className="w-24 h-24">
-          <AvatarImage src={currentImage} />
+          <AvatarImage src={currentImage} alt={userName} />
           <AvatarFallback className="text-2xl">{userName.charAt(0)}</AvatarFallback>
         </Avatar>
         <div className="absolute -bottom-2 -right-2">

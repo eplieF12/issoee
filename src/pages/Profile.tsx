@@ -256,7 +256,7 @@ const Profile = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Certificações</label>
-                  <div className="space-y-2" />
+                    <div className="space-y-2" />
                   </div>
                 </div>
               </CardContent>
@@ -269,28 +269,32 @@ const Profile = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {recentJobs.map((job) => (
-                    <div key={job.id} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
-                      <div className="flex justify-between items-start mb-2">
-                        <div>
-                          <h4 className="font-medium text-gray-900">{job.title}</h4>
-                          <p className="text-gray-600">{job.establishment}</p>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-semibold text-green-600">{job.earnings}</p>
-                          <div className="flex items-center">
-                            {[...Array(job.rating)].map((_, i) => (
-                              <Star key={i} className="w-3 h-3 text-yellow-400 fill-current" />
-                            ))}
+                  {recentJobs.length > 0 ? (
+                    recentJobs.map((job) => (
+                      <div key={job.id} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                        <div className="flex justify-between items-start mb-2">
+                          <div>
+                            <h4 className="font-medium text-gray-900">{job.title}</h4>
+                            <p className="text-gray-600">{job.establishment}</p>
+                          </div>
+                          <div className="text-right">
+                            <p className="font-semibold text-green-600">{job.earnings}</p>
+                            <div className="flex items-center">
+                              {[...Array(job.rating)].map((_, i) => (
+                                <Star key={i} className="w-3 h-3 text-yellow-400 fill-current" />
+                              ))}
+                            </div>
                           </div>
                         </div>
+                        <div className="flex items-center text-sm text-gray-600">
+                          <Calendar className="w-4 h-4 mr-1" />
+                          {job.date}
+                        </div>
                       </div>
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Calendar className="w-4 h-4 mr-1" />
-                        {job.date}
-                      </div>
-                    </div>
-                  ))}
+                    ))
+                  ) : (
+                    <p className="text-gray-600">Nenhum trabalho recente encontrado.</p>
+                  )}
                 </div>
               </CardContent>
             </Card>
