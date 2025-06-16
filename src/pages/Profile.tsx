@@ -8,6 +8,12 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@/components/ui/tabs";
+import {
   Star,
   MapPin,
   Calendar,
@@ -174,10 +180,14 @@ const Profile = () => {
           </Card>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Personal Information */}
+        <Tabs defaultValue="info">
+          <TabsList className="mb-4">
+            <TabsTrigger value="info">Informações</TabsTrigger>
+            <TabsTrigger value="experience">Experiência</TabsTrigger>
+            <TabsTrigger value="jobs">Trabalhos</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="info">
             <Card>
               <CardHeader>
                 <CardTitle>Informações Pessoais</CardTitle>
@@ -236,8 +246,9 @@ const Profile = () => {
                 )}
               </CardContent>
             </Card>
+          </TabsContent>
 
-            {/* Experience & Skills */}
+          <TabsContent value="experience">
             <Card>
               <CardHeader>
                 <CardTitle>Experiência e Habilidades</CardTitle>
@@ -248,7 +259,7 @@ const Profile = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-1">Áreas de atuação</label>
                     <div className="flex flex-wrap gap-2" />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Experiência</label>
                     <Input defaultValue="" disabled={!isEditing} />
@@ -256,46 +267,51 @@ const Profile = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Certificações</label>
-                  <div className="space-y-2" />
+                    <div className="space-y-2" />
                   </div>
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
 
-            {/* Recent Jobs */}
+          <TabsContent value="jobs">
             <Card>
               <CardHeader>
                 <CardTitle>Trabalhos Recentes</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {recentJobs.map((job) => (
-                    <div key={job.id} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
-                      <div className="flex justify-between items-start mb-2">
-                        <div>
-                          <h4 className="font-medium text-gray-900">{job.title}</h4>
-                          <p className="text-gray-600">{job.establishment}</p>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-semibold text-green-600">{job.earnings}</p>
-                          <div className="flex items-center">
-                            {[...Array(job.rating)].map((_, i) => (
-                              <Star key={i} className="w-3 h-3 text-yellow-400 fill-current" />
-                            ))}
+                  {recentJobs.length === 0 ? (
+                    <p className="text-sm text-gray-600">Nenhum trabalho recente.</p>
+                  ) : (
+                    recentJobs.map((job) => (
+                      <div key={job.id} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                        <div className="flex justify-between items-start mb-2">
+                          <div>
+                            <h4 className="font-medium text-gray-900">{job.title}</h4>
+                            <p className="text-gray-600">{job.establishment}</p>
+                          </div>
+                          <div className="text-right">
+                            <p className="font-semibold text-green-600">{job.earnings}</p>
+                            <div className="flex items-center">
+                              {[...Array(job.rating)].map((_, i) => (
+                                <Star key={i} className="w-3 h-3 text-yellow-400 fill-current" />
+                              ))}
+                            </div>
                           </div>
                         </div>
+                        <div className="flex items-center text-sm text-gray-600">
+                          <Calendar className="w-4 h-4 mr-1" />
+                          {job.date}
+                        </div>
                       </div>
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Calendar className="w-4 h-4 mr-1" />
-                        {job.date}
-                      </div>
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </div>
               </CardContent>
             </Card>
-          </div>
-        </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
