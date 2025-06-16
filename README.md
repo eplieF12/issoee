@@ -82,6 +82,26 @@ VITE_SUPABASE_URL=https://cfdoxhlhsedbohangdsr.supabase.co
 VITE_SUPABASE_ANON_KEY=<your anon key>
 ```
 
+Ensure that the `users` table exists in your Supabase project. The following SQL
+snippet can be used to create it with Row Level Security enabled:
+
+```sql
+create table if not exists public.users (
+  id uuid primary key references auth.users,
+  name text not null,
+  email text not null,
+  phone text,
+  city text,
+  category text,
+  description text,
+  user_type text not null
+);
+
+alter table public.users enable row level security;
+create policy "Authenticated CRUD" on public.users
+  for all using (auth.uid() = id);
+```
+
 Install dependencies (including `@supabase/supabase-js`) and run the development server:
 
 ```
