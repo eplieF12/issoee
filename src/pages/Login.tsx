@@ -35,9 +35,23 @@ const Login = () => {
       return;
     }
 
+    // Try to fetch the user's profile from the "users" table
+    let profileName = (data.user?.user_metadata as any)?.name || "";
+    if (data.user) {
+      const { data: profile, error: profileError } = await supabase
+        .from("users")
+        .select("name")
+        .eq("id", data.user.id)
+        .maybeSingle();
+
+      if (!profileError && profile?.name) {
+        profileName = profile.name;
+      }
+    }
+
     const userData = {
       id: data.user?.id || 0,
-      name: (data.user?.user_metadata as any)?.name || "",
+      name: profileName,
       type: userType,
       email: data.user?.email || email,
     };
