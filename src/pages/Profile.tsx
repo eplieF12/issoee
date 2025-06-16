@@ -8,10 +8,12 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Star, MapPin, Calendar, Edit, Camera, Award } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isAvailable, setIsAvailable] = useState(true);
+  const { toast } = useToast();
 
   const userStats = {
     totalJobs: 45,
@@ -38,6 +40,14 @@ const Profile = () => {
       earnings: "R$ 200"
     }
   ];
+
+  const handleSaveProfile = () => {
+    toast({
+      title: "Perfil atualizado!",
+      description: "Suas informações foram salvas com sucesso.",
+    });
+    setIsEditing(false);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -150,7 +160,7 @@ const Profile = () => {
 
                 {isEditing && (
                   <div className="flex space-x-2">
-                    <Button className="bg-gradient-primary text-white">Salvar Alterações</Button>
+                    <Button className="bg-gradient-primary text-white" onClick={handleSaveProfile}>Salvar Alterações</Button>
                     <Button variant="outline" onClick={() => setIsEditing(false)}>Cancelar</Button>
                   </div>
                 )}
