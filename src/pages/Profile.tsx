@@ -62,14 +62,14 @@ const Profile = () => {
 
     const { error } = await supabase
       .from("users")
-      .update({
+      .upsert({
+        id: user.id,
         name: profile.name,
         email: profile.email,
         phone: profile.phone,
         city: profile.city,
         description: profile.description,
-      })
-      .eq("id", user.id);
+      });
 
     if (error) {
       toast({ title: "Erro", description: error.message, variant: "destructive" });
