@@ -17,65 +17,15 @@ const EstablishmentDashboard = () => {
   const { toast } = useToast();
 
   const [stats, setStats] = useState({
-    activeJobs: 5,
-    monthlySpent: 3200,
-    avgRating: 4.7,
-    totalHires: 28
+    activeJobs: 0,
+    monthlySpent: 0,
+    avgRating: 0,
+    totalHires: 0
   });
 
-  const [myJobs, setMyJobs] = useState([
-    {
-      id: 1,
-      title: "Garçom para Evento Corporativo",
-      location: "São Paulo, SP",
-      date: "15 de Janeiro",
-      time: "18:00 - 23:00",
-      payment: "R$ 120",
-      status: "active",
-      applicants: 8
-    },
-    {
-      id: 2,
-      title: "Atendente para Feira",
-      location: "São Paulo, SP",
-      date: "20 de Janeiro",
-      time: "14:00 - 22:00",
-      payment: "R$ 150",
-      status: "filled",
-      applicants: 12
-    }
-  ]);
+  const [myJobs, setMyJobs] = useState<any[]>([]);
 
-  const [applications, setApplications] = useState([
-    {
-      id: 1,
-      jobId: 1,
-      name: "João Silva",
-      freelancerName: "João Silva",
-      jobTitle: "Garçom para Evento Corporativo",
-      rating: 4.8,
-      experience: "3 anos",
-      avatar:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-      location: "São Paulo, SP",
-      appliedDate: "05/01/2024",
-      status: "pending",
-    },
-    {
-      id: 2,
-      jobId: 1,
-      name: "Maria Santos",
-      freelancerName: "Maria Santos",
-      jobTitle: "Garçom para Evento Corporativo",
-      rating: 4.9,
-      experience: "5 anos",
-      avatar:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-      location: "São Paulo, SP",
-      appliedDate: "06/01/2024",
-      status: "pending",
-    },
-  ]);
+  const [applications, setApplications] = useState<any[]>([]);
 
   const handleCreateJob = (jobData: any) => {
     setMyJobs(prev => [jobData, ...prev]);
@@ -131,7 +81,7 @@ const EstablishmentDashboard = () => {
         {/* Header Dashboard */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Dashboard - Hotel Marriott 🏨
+            Dashboard do Estabelecimento
           </h1>
           <p className="text-gray-600">Gerencie suas vagas e contratações</p>
         </div>
