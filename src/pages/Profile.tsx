@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,11 +9,22 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Star, MapPin, Calendar, Edit, Camera, Award } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/lib/supabaseClient";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isAvailable, setIsAvailable] = useState(true);
   const { toast } = useToast();
+  const { user, login } = useAuth();
+
+  const [profile, setProfile] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    city: "",
+    description: "",
+  });
 
   const userStats = {
     totalJobs: 0,
@@ -24,10 +35,67 @@ const Profile = () => {
 
   const recentJobs: any[] = [];
 
-  const handleSaveProfile = () => {
+  const handleInputChange = (field: keyof typeof profile, value: string) => {
+    setProfile((prev) => ({ ...prev, [field]: value }));
+  };
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!user?.id) return;
+      const { data, error } = await supabase
+        .from('users')
+        .select('name,email,phone,city,description')
+        .eq('id', user.id)
+        .single();
+      if (error) {
+        toast({ title: 'Erro', description: error.message, variant: 'destructive' });
+        return;
+      }
+      if (data) {
+        setProfile({
+          name: data.name ?? '',
+          email: data.email ?? '',
+          phone: data.phone ?? '',
+          city: data.city ?? '',
+          description: data.description ?? '',
+        });
+      }
+    };
+
+    fetchProfile();
+  }, [user]);
+
+  const handleSaveProfile = async () => {
+    if (!user?.id) {
+      toast({
+        title: 'Erro',
+        description: 'Usuário não autenticado.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    const { error } = await supabase
+      .from('users')
+      .update({
+        name: profile.name,
+        email: profile.email,
+        phone: profile.phone,
+        city: profile.city,
+        description: profile.description,
+      })
+      .eq('id', user.id);
+
+    if (error) {
+      toast({ title: 'Erro', description: error.message, variant: 'destructive' });
+      return;
+    }
+
+    login({ ...user, name: profile.name, email: profile.email });
+
     toast({
-      title: "Perfil atualizado!",
-      description: "Suas informações foram salvas com sucesso.",
+      title: 'Perfil atualizado!',
+      description: 'Suas informações foram salvas com sucesso.',
     });
     setIsEditing(false);
   };
@@ -116,26 +184,43 @@ const Profile = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
-                    <Input defaultValue="" disabled={!isEditing} />
+                    <Input
+                      value={profile.name}
+                      onChange={(e) => handleInputChange('name', e.target.value)}
+                      disabled={!isEditing}
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                    <Input defaultValue="" disabled={!isEditing} />
+                    <Input
+                      value={profile.email}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
+                      disabled={!isEditing}
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
-                    <Input defaultValue="" disabled={!isEditing} />
+                    <Input
+                      value={profile.phone}
+                      onChange={(e) => handleInputChange('phone', e.target.value)}
+                      disabled={!isEditing}
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Localização</label>
-                    <Input defaultValue="" disabled={!isEditing} />
+                    <Input
+                      value={profile.city}
+                      onChange={(e) => handleInputChange('city', e.target.value)}
+                      disabled={!isEditing}
+                    />
                   </div>
                 </div>
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Sobre mim</label>
                   <Textarea
-                    defaultValue=""
+                    value={profile.description}
+                    onChange={(e) => handleInputChange('description', e.target.value)}
                     disabled={!isEditing}
                     rows={3}
                   />
