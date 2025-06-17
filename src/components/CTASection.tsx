@@ -15,11 +15,11 @@ const CTASection = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-primary relative overflow-hidden">
+    <section className="py-16 sm:py-20 bg-gradient-primary relative overflow-hidden">
       {/* Background decorative elements */}
-      <div className="absolute top-10 left-10 w-20 h-20 bg-white/10 rounded-full"></div>
-      <div className="absolute bottom-10 right-10 w-32 h-32 bg-white/5 rounded-full"></div>
-      <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white/10 rounded-full"></div>
+      <div className="hidden sm:block absolute top-10 left-10 w-20 h-20 bg-white/10 rounded-full"></div>
+      <div className="hidden sm:block absolute bottom-10 right-10 w-32 h-32 bg-white/5 rounded-full"></div>
+      <div className="hidden sm:block absolute top-1/2 left-1/4 w-16 h-16 bg-white/10 rounded-full"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
