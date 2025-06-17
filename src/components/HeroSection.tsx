@@ -2,9 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { Search, MapPin, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const HeroSection = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const handleFreelancerClick = () => {
     navigate("/register");
@@ -32,23 +34,28 @@ const HeroSection = () => {
             Plataforma confiável para contratar garçons, promoters e especialistas em eventos de forma ágil e segura.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-in" style={{animationDelay: '0.4s'}}>
-            <Button 
-              size="lg" 
-              className="bg-gradient-primary text-white px-8 py-4 text-lg hover:scale-105 transition-transform"
-              onClick={handleFreelancerClick}
+          {!user && (
+            <div
+              className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-in"
+              style={{ animationDelay: "0.4s" }}
             >
-              Sou Freelancer
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="border-2 border-blue-600 text-blue-600 px-8 py-4 text-lg hover:bg-blue-50 hover:scale-105 transition-all"
-              onClick={handleEstablishmentClick}
-            >
-              Sou Estabelecimento
-            </Button>
-          </div>
+              <Button
+                size="lg"
+                className="bg-gradient-primary text-white px-8 py-4 text-lg hover:scale-105 transition-transform"
+                onClick={handleFreelancerClick}
+              >
+                Sou Freelancer
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-2 border-blue-600 text-blue-600 px-8 py-4 text-lg hover:bg-blue-50 hover:scale-105 transition-all"
+                onClick={handleEstablishmentClick}
+              >
+                Sou Estabelecimento
+              </Button>
+            </div>
+          )}
 
           {/* Quick stats */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto animate-fade-in" style={{animationDelay: '0.6s'}}>
