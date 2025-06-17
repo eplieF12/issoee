@@ -155,7 +155,7 @@ const Header = () => {
               </>
             ) : (
               <>
-                <Button variant="outline" onClick={handleLogin}>
+                <Button onClick={handleLogin}>
                   Entrar
                 </Button>
                 <Button onClick={() => navigate("/register-freelancer")}>
@@ -253,8 +253,7 @@ const Header = () => {
                   </>
                 ) : (
                   <>
-                    <Button 
-                      variant="outline" 
+                    <Button
                       className="w-full"
                       onClick={() => {
                         handleLogin();
