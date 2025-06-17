@@ -71,7 +71,7 @@ const Header = () => {
                 src="/logo.png"
                 srcSet="/logo.svg 2x"
                 alt="Logo"
-                className="h-12 w-auto mr-4 object-contain"
+                className="h-16 w-auto mr-4 object-contain"
               />
               {user && <span className="text-white font-semibold">{user.name}</span>}
             </button>
