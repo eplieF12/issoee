@@ -101,25 +101,27 @@ const Profile = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8">
         {/* Profile Header */}
         <Card className="overflow-hidden mb-8">
-          <div className="h-24 bg-gradient-to-r from-blue-600 to-purple-600" />
-          <CardContent className="-mt-12 flex flex-col md:flex-row items-center justify-between">
-            <div className="flex items-center space-x-6">
+          <div className="relative">
+            <div className="h-24 bg-gradient-to-r from-blue-600 to-purple-600" />
+            <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 md:left-8 md:translate-x-0">
               <ProfileImageUpload
                 currentImage="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
                 userName={profile.name || "Usuário"}
                 onImageChange={() => {}}
               />
-              <div className="text-center md:text-left">
-                <h2 className="text-2xl font-bold text-gray-900">{profile.name || "Novo Usuário"}</h2>
-                <p className="text-gray-600 flex items-center justify-center md:justify-start">
-                  <MapPin className="w-4 h-4 mr-1" />
-                  {profile.city || "Localização"}
-                </p>
-                <div className="flex items-center justify-center md:justify-start mt-2">
-                  <Star className="w-4 h-4 text-yellow-400 fill-current mr-1" />
-                  <span className="font-medium">{userStats.rating}</span>
-                  <span className="text-gray-500 text-sm ml-1">({userStats.totalJobs} avaliações)</span>
-                </div>
+            </div>
+          </div>
+          <CardContent className="pt-16 flex flex-col md:flex-row items-center justify-between">
+            <div className="text-center md:text-left md:ml-36 flex-1">
+              <h2 className="text-2xl font-bold text-gray-900">{profile.name || "Novo Usuário"}</h2>
+              <p className="text-gray-600 flex items-center justify-center md:justify-start">
+                <MapPin className="w-4 h-4 mr-1" />
+                {profile.city || "Localização"}
+              </p>
+              <div className="flex items-center justify-center md:justify-start mt-2">
+                <Star className="w-4 h-4 text-yellow-400 fill-current mr-1" />
+                <span className="font-medium">{userStats.rating}</span>
+                <span className="text-gray-500 text-sm ml-1">({userStats.totalJobs} avaliações)</span>
               </div>
             </div>
 
