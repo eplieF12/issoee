@@ -9,9 +9,16 @@ const Footer = () => {
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
               <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm"> <img src="/public/favicon.ico"></img></span>
+                <span className="text-white font-bold text-sm"><img src="/public/favicon.ico" /></span>
               </div>
-              <span className="text-xl font-bold">FreeAllin</span>
+              {/* Show text on larger screens and logo on mobile */}
+              <span className="hidden sm:block text-xl font-bold">FreeAllin</span>
+              <img
+                src="/logo.png"
+                srcSet="/logo.svg 2x"
+                alt="FreeAllin logo"
+                className="block sm:hidden h-8 w-auto"
+              />
             </div>
             <p className="text-gray-400 mb-4 max-w-md">
               A plataforma que conecta freelancers qualificados a estabelecimentos que precisam de profissionais para eventos e serviços temporários.
