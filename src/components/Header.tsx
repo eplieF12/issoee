@@ -58,14 +58,14 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed w-full top-0 z-50 bg-white/80 backdrop-blur shadow-md border-b">
+    <header className="fixed w-full top-0 z-50 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 shadow-md text-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
             <button
               onClick={() => navigate("/")}
-              className="flex items-center text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors"
+              className="flex items-center text-2xl font-bold text-white hover:text-gray-200 transition-colors"
             >
               <img
                 src="/logo.png"
@@ -73,7 +73,7 @@ const Header = () => {
                 alt="Logo"
                 className="h-12 w-auto mr-4 object-contain"
               />
-              {user && <span className="text-black font-semibold">{user.name}</span>}
+              {user && <span className="text-white font-semibold">{user.name}</span>}
             </button>
           </div>
 
@@ -83,8 +83,8 @@ const Header = () => {
               <button
                 key={item.name}
                 onClick={() => navigate(item.href)}
-                className={`relative text-black hover:text-blue-600 transition-colors font-medium ${
-                  location.pathname === item.href ? "text-blue-600 font-semibold" : ""
+                className={`relative text-white hover:text-gray-200 transition-colors font-medium ${
+                  location.pathname === item.href ? "text-gray-200 font-semibold" : ""
                 }`}
               >
                 {item.name}
@@ -169,7 +169,7 @@ const Header = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-black hover:text-blue-600 transition-colors"
+              className="text-white hover:text-gray-200 transition-colors"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -189,8 +189,8 @@ const Header = () => {
                   }}
                   className={`relative block px-3 py-2 text-base font-medium transition-colors w-full text-left ${
                     location.pathname === item.href
-                      ? "text-blue-600 font-semibold bg-blue-50"
-                      : "text-black hover:text-blue-600 hover:bg-gray-50"
+                      ? "text-gray-200 font-semibold bg-white/20"
+                      : "text-white hover:text-gray-200 hover:bg-white/10"
                   }`}
                 >
                   {item.name}
