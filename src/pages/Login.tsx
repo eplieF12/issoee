@@ -35,24 +35,40 @@ const Login = () => {
       return;
     }
 
-    // Try to fetch the user's profile from the "users" table
+    // Fetch profile to verify user type and get name
     let profileName = (data.user?.user_metadata as any)?.name || "";
+    let profileType = (data.user?.user_metadata as any)?.user_type as
+      | "freelancer"
+      | "establishment"
+      | undefined;
     if (data.user) {
       const { data: profile, error: profileError } = await supabase
         .from("users")
-        .select("name")
+        .select("name, user_type")
         .eq("id", data.user.id)
         .maybeSingle();
 
-      if (!profileError && profile?.name) {
-        profileName = profile.name;
+      if (!profileError && profile) {
+        profileName = profile.name || profileName;
+        profileType = profile.user_type as "freelancer" | "establishment";
       }
+    }
+
+    if (profileType && profileType !== userType) {
+      await supabase.auth.signOut();
+      toast({
+        title: "Erro",
+        description: "Tipo de usuário incorreto.",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return;
     }
 
     const userData = {
       id: data.user?.id || "",
       name: profileName,
-      type: userType,
+      type: (profileType || userType) as "freelancer" | "establishment",
       email: data.user?.email || email,
     };
 
@@ -63,11 +79,11 @@ const Login = () => {
       description: `Bem-vindo(a) de volta, ${userData.name}!`,
     });
 
-    if (userType === "freelancer") {
-      navigate("/freelancer-dashboard");
-    } else {
-      navigate("/establishment-dashboard");
-    }
+    const destination =
+      (profileType || userType) === "freelancer"
+        ? "/freelancer-dashboard"
+        : "/establishment-dashboard";
+    navigate(destination);
 
     setIsLoading(false);
   };

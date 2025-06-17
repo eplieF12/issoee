@@ -11,8 +11,18 @@ import { useToast } from "@/hooks/use-toast";
 import { UserPlus, ArrowLeft } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 
-const Register = () => {
-  const [userType, setUserType] = useState<"freelancer" | "establishment">("freelancer");
+interface RegisterProps {
+  initialUserType?: "freelancer" | "establishment";
+  allowUserTypeChange?: boolean;
+}
+
+const Register = ({
+  initialUserType = "freelancer",
+  allowUserTypeChange = true,
+}: RegisterProps) => {
+  const [userType, setUserType] = useState<"freelancer" | "establishment">(
+    initialUserType
+  );
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -137,18 +147,25 @@ const Register = () => {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleRegister} className="space-y-4">
-              <div>
-                <Label htmlFor="userType">Tipo de conta</Label>
-                <Select value={userType} onValueChange={(value) => setUserType(value as "freelancer" | "establishment")}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="freelancer">Sou Freelancer</SelectItem>
-                    <SelectItem value="establishment">Sou Estabelecimento</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              {allowUserTypeChange && (
+                <div>
+                  <Label htmlFor="userType">Tipo de conta</Label>
+                  <Select
+                    value={userType}
+                    onValueChange={(value) =>
+                      setUserType(value as "freelancer" | "establishment")
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="freelancer">Sou Freelancer</SelectItem>
+                      <SelectItem value="establishment">Sou Estabelecimento</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
 
               <div>
                 <Label htmlFor="name">
