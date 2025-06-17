@@ -12,11 +12,11 @@ const Footer = () => {
                 <span className="text-white font-bold text-sm"><img src="/public/favicon.ico" /></span>
               </div>
               {/* Show text on larger screens and logo on mobile */}
-              <span className="hidden sm:block text-xl font-bold">FreeAllin</span>
+              <span className="hidden sm:block text-xl font-bold">GarçomMatch</span>
               <img
                 src="/logo.png"
                 srcSet="/logo.svg 2x"
-                alt="FreeAllin logo"
+                alt="GarçomMatch logo"
                 className="block sm:hidden h-8 w-auto"
               />
             </div>
