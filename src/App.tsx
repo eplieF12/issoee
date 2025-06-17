@@ -15,6 +15,8 @@ import NotFound from "./pages/NotFound";
 import HowItWorks from "./pages/HowItWorks";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import RegisterFreelancer from "./pages/RegisterFreelancer";
+import RegisterEstablishment from "./pages/RegisterEstablishment";
 import FreelancersList from "./pages/FreelancersList";
 import FreelancerProfile from "./pages/FreelancerProfile";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -36,6 +38,8 @@ const App = () => (
                 <Route path="/how-it-works" element={<HowItWorks />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/register-freelancer" element={<RegisterFreelancer />} />
+                <Route path="/register-establishment" element={<RegisterEstablishment />} />
                 <Route path="/freelancers" element={<FreelancersList />} />
                 <Route path="/freelancer/:id" element={<FreelancerProfile />} />
                 <Route path="/freelancer-dashboard" element={<FreelancerDashboard />} />

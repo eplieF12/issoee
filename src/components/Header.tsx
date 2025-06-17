@@ -158,7 +158,7 @@ const Header = () => {
                 <Button variant="outline" onClick={handleLogin}>
                   Entrar
                 </Button>
-                <Button onClick={() => navigate("/register")}>
+                <Button onClick={() => navigate("/register-freelancer")}>
                   Cadastrar
                 </Button>
               </>
@@ -266,7 +266,7 @@ const Header = () => {
                     <Button 
                       className="w-full"
                       onClick={() => {
-                        navigate("/register");
+                        navigate("/register-freelancer");
                         setIsMenuOpen(false);
                       }}
                     >

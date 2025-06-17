@@ -9,11 +9,11 @@ const HeroSection = () => {
   const { user } = useAuth();
 
   const handleFreelancerClick = () => {
-    navigate("/register");
+    navigate("/register-freelancer");
   };
 
   const handleEstablishmentClick = () => {
-    navigate("/register");
+    navigate("/register-establishment");
   };
 
   return (
