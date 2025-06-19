@@ -74,7 +74,7 @@ const EstablishmentDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-white">
       <Header />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
